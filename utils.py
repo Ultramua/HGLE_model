@@ -46,7 +46,7 @@ def ensure_path(path):
 
 
 def get_dataloader(data, label, batch_size):
-    # load the data  ; generator=torch.Generator(device=device),
+
     dataset = eegDataset(data, label)
     loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, pin_memory=False,
                         generator=torch.Generator(device=device), drop_last=True)
@@ -65,10 +65,7 @@ def get_metrics(y_pred, y_true, classes=None):
 
 
 def log2txt(content, args):
-    """
-    this function log the content to results.txt
-    :param content: string, the content to log
-    """
+   
     result_path = osp.join(args.save_path, 'result')
     ensure_path(result_path)
     text_file = osp.join(result_path,
