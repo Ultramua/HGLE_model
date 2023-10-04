@@ -1,7 +1,6 @@
 # HGLE_model
 
-* This is the main code for the HGLE model. If you want to use this model, please process your data in such a format as (batch _ size, 1, channels, features).
-The following is a schematic diagram of the framework of the model：
+* This is the primary code for the HGLE model. If you intend to utilize this model, please format your data as follows: (batch size, 1, channels, features). Below is a schematic diagram outlining the model's framework:
 ![image](https://github.com/Ultramua/HGLE_model/assets/146943374/88ec459d-b59c-4ebc-91c7-9bf7304a091e)
 
-* At present, the paper is in the submission process. If the paper is received, the complete code will be uploaded later. 
+* The paper is currently in the submission process. If it gets accepted, we will upload the complete code later.
