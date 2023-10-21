@@ -156,7 +156,7 @@ def halved_data(train_data, train_label, test_data, test_label):
 
 
 def normalize(input):
-    # data: sample x 1 x channel x data  取各自的均值方差归一化
+    # data: sample x 1 x channel x data  
     for channel in range(input.shape[2]):
         input_mean = np.mean(input[:, :, channel, :])
         input_std = np.std(input[:, :, channel, :])
