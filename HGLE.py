@@ -10,24 +10,7 @@ EPS = 1e-30
 use_cuda = torch.cuda.is_available()
 print('use_cuda:', use_cuda)
 device = torch.device('cuda:0' if use_cuda else 'cpu')
-"""
-这个是最终版本，谨慎改动
-个是最终版本，谨慎改动
-个是最终版本，谨慎改动
-个是最终版本，谨慎改动
-个是最终版本，谨慎改动
-个是最终版本，谨慎改动
 
-
-"""
-"""
- 一个简化的模型，去掉了结构信息部分，保留其他的部分
-使用的图卷积是有激活函数的
-将图嵌入也修改了用注意力权重加权求和
-加入dropout
-
-
-"""
 
 
 class GraphConvolution(nn.Module):
@@ -46,7 +29,7 @@ class GraphConvolution(nn.Module):
         # out = torch.matmul(x, self.weight)
         # out = F.relu(torch.matmul(adj, out) - self.bias)
 
-        # 注释掉的是不使用激活函数的图卷积操作
+        #
         out = torch.matmul(adj, x)
         out = torch.matmul(out, self.weight) - self.bias
         return out
@@ -84,7 +67,7 @@ class HGLEnet(nn.Module):
     def __init__(self, num_class, input_size, sampling_rate, num_T, out_graph, out_graph_, dropout_rate, pool,
                  pool_step_rate):
         super(HGLEnet, self).__init__()
-        # 多尺度卷积窗口大小设置
+        # 
         self.window = [0.1, 0.2, 0.5]
         self.pool = pool
         self.channel = input_size[1]
