@@ -46,7 +46,7 @@ def ensure_path(path):
 
 
 def get_dataloader(data, label, batch_size):
-
+    # load the data  ; generator=torch.Generator(device=device),
     dataset = eegDataset(data, label)
     loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, pin_memory=False,
                         generator=torch.Generator(device=device), drop_last=True)
@@ -63,9 +63,31 @@ def get_metrics(y_pred, y_true, classes=None):
     return acc, f1, cm
 
 
+def record_init(args):
+    result_path = osp.join(args.save_path, 'result')
+    ensure_path(result_path)
+    text_file = osp.join(result_path,
+                         "results_{}.txt".format(args.dataset))
+    file = open(text_file, 'a')
+    file.write("\n" + str(datetime.datetime.now()) +
+               "\nTrain:Parameter setting for " + str(args.model) + ' on ' + str(args.dataset) +
+               "\n1)number_class:" + str(args.num_class) +
+               "\n2)random_seed:" + str(args.random_seed) +
+               "\n3)learning_rate:" + str(args.learning_rate) +
+               "\n4)pool:" + str(args.pool) +
+               "\n5)num_epochs:" + str(args.max_epoch) +
+               "\n6)batch_size:" + str(args.batch_size) +
+               "\n7)dropout:" + str(args.dropout) +
+               "\n8)hidden1_node:" + str(args.hidden1) + "hidden2_node:" + str(args.hidden2) +
+               "\n9)input_shape:" + str(args.input_shape) +
+               "\n10)train setting:" + str(args.train_session) + str(args.train_emotion) +
+               "\n11)test setting:" + str(args.test_session) + str(args.test_emotion) +
+               "\n12)T:" + str(args.T) + '\n')
+
+    file.close()
+
 
 def log2txt(content, args):
-   
     result_path = osp.join(args.save_path, 'result')
     ensure_path(result_path)
     text_file = osp.join(result_path,
@@ -90,9 +112,7 @@ class Averager():
 
 
 class LabelSmoothing(nn.Module):
-
     def __init__(self, smoothing=0.0):
-
         super(LabelSmoothing, self).__init__()
         self.confidence = 1.0 - smoothing
         self.smoothing = smoothing
@@ -107,6 +127,7 @@ class LabelSmoothing(nn.Module):
 
 
 class Timer():
+
     def __init__(self):
         self.o = time.time()
 
@@ -135,6 +156,7 @@ def halved_data(train_data, train_label, test_data, test_label):
 
 
 def normalize(input):
+    # data: sample x 1 x channel x data  取各自的均值方差归一化
     for channel in range(input.shape[2]):
         input_mean = np.mean(input[:, :, channel, :])
         input_std = np.std(input[:, :, channel, :])
@@ -142,6 +164,16 @@ def normalize(input):
     return input
 
 
+def normalize_v2(train, test):
+
+    # data: sample x 1 x channel x data
+
+    for channel in range(train.shape[2]):
+        mean = np.mean(train[:, :, channel, :])
+        std = np.std(train[:, :, channel, :])
+        train[:, :, channel, :] = (train[:, :, channel, :] - mean)  # / std
+        test[:, :, channel, :] = (test[:, :, channel, :] - mean)  # / std
+    return train, test
 
 
 
