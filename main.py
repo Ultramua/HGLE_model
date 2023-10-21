@@ -71,6 +71,6 @@ if __name__ == '__main__':
         test_label=test_label,
         model=model,
         batch_size=64,
-        lr=0.0015)
+        lr=0.001)
     print('total_acc:', total_acc, 'total_f1:', total_f1)
 
