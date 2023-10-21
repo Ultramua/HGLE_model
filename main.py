@@ -27,8 +27,8 @@ if __name__ == '__main__':
         torch.set_default_tensor_type('torch.cuda.FloatTensor')
     device = torch.device('cuda:0' if use_cuda else 'cpu')
     # load data
-    file_path_train = '/home/lhg/processed_data/SEED_DE/mixture/overlap0_step_10'
-    file_path_test = '/home/lhg/processed_data/SEED_DE/mixture/overlap0_step_10'
+    file_path_train = '/home/lhg/processed_data/SEED_DE'
+    file_path_test = '/home/lhg/processed_data/SEED_DE'
     train_data_name = 'session1.hdf'
     train_data_path = os.path.join(file_path_train, train_data_name)
     dataset = h5py.File(train_data_path, 'r')
